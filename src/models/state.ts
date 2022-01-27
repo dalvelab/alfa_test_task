@@ -2,6 +2,7 @@ import { IBook } from "./books";
 
 interface ITransactionsState {
   booksTransaction: {
+    loading: boolean;
     books: IBook[];
   };
 }

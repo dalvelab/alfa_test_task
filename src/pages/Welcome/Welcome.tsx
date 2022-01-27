@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { CardBook, Container, Navbar } from "../../components";
 import { getBooks, setBooksFilter, setBookLike } from "../../actions";
-import { booksFilterSelector, filteredBooksSelector } from "../../selectors";
+import {
+  booksFilterSelector,
+  filteredBooksSelector,
+  booksSelector,
+} from "../../selectors";
 import { IBook } from "../../models";
 
 // STYLES
@@ -18,6 +22,7 @@ export const WelcomePage: FC = () => {
 
   const books = useSelector(filteredBooksSelector);
   const filter = useSelector(booksFilterSelector);
+  const { loading } = useSelector(booksSelector);
 
   const handleFilterClick = () => {
     dispatch(setBooksFilter(!filter.showOnlyLiked));
@@ -37,7 +42,8 @@ export const WelcomePage: FC = () => {
               {filter.showOnlyLiked ? "Показать все" : "Показать избранные"}
             </button>
           </div>
-          {books.length === 0 && (
+          {loading && <span className="emptyText">Загрузка...</span>}
+          {books.length === 0 && !loading && (
             <span className="emptyText">
               Книг нет, попробуйте изменить настройки фильтра
             </span>
